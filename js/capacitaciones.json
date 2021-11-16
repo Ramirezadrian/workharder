@@ -1,0 +1,37 @@
+ [{
+         "img": "img/gap.jpg",
+         "nombre": "GAP",
+         "precio": "3500",
+         "id": "1"
+     },
+     {
+         "img": "img/spinning.jpg",
+         "nombre": "SPININNG",
+         "precio": "6000",
+         "id": "2"
+     },
+     {
+         "img": "img/hiit.jpg",
+         "nombre": "HIIT",
+         "precio": "4500",
+         "id": "3"
+     },
+     {
+         "img": "img/crossfit.jpg",
+         "nombre": "CROSSFIT",
+         "precio": "8000",
+         "id": "4"
+     },
+     {
+         "img": "img/funcional.jpg",
+         "nombre": "FUNCIONAL",
+         "precio": "5000",
+         "id": "5"
+     },
+     {
+         "img": "img/box.jpg",
+         "nombre": "FIT-BOX",
+         "precio": "6500",
+         "id": "6"
+     }
+ ]

@@ -1,0 +1,64 @@
+[{
+
+        "img": "img/bolsa.jpg",
+        "nombre": "BOLSA BOXEO/KICKBOXING",
+        "precio": "6800",
+        "id": "20"
+    },
+    {
+
+        "img": "img/botella.jpg",
+        "nombre": "BOTELLA",
+        "precio": "1850",
+        "id": "21"
+    },
+    {
+
+        "img": "img/kit.jpg",
+        "nombre": "KIT PESAS",
+        "precio": "4580",
+        "id": "23"
+    },
+    {
+
+        "img": "img/pesas1.jpg",
+        "nombre": "JUEGO PESAS 1KG",
+        "precio": "1750",
+        "id": "24"
+    },
+    {
+
+        "img": "img/pesas2.jpg",
+        "nombre": "JUEGO PESAS 2KG",
+        "precio": "2300",
+        "id": "25"
+    },
+    {
+
+        "img": "img/rusas.jpg",
+        "nombre": "PESA RUSA 8KG",
+        "precio": "2100",
+        "id": "26"
+    },
+    {
+
+        "img": "img/suplemento1.jpg",
+        "nombre": "SUPLEMENTO VITAMINAS 120CAPS",
+        "precio": "3300",
+        "id": "27"
+    },
+    {
+
+        "img": "img/suplemento2.jpg",
+        "nombre": "SUPLEMENTO QUEMADOR DE GRASAS 60CAPS",
+        "precio": "1750",
+        "id": "28"
+    },
+    {
+
+        "img": "img/colchoneta.jpg",
+        "nombre": "COLCHONETA",
+        "precio": "720",
+        "id": "22"
+    }
+]
