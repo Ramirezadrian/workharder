@@ -200,3 +200,7 @@ tbody img {
 .derechos {
     font-size: 1.2rem;
 }
+
+.fondoFooter a:hover {
+    opacity: 0.5;
+}

@@ -2,10 +2,14 @@ const capacitaciones = document.querySelector('#listaCapacitaciones');
 const products = document.querySelector('#listaProductos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
 const tableTotal = document.querySelector('#lista-carrito tfoot');
-
-
+let usuarios = [];
+let usuariosLS = JSON.parse(localStorage.getItem('usuarios'));
+if (usuariosLS !== null) {
+    usuarios = JSON.parse(localStorage.getItem('usuarios'));
+}
 let carrito;
 let total;
+let sesion = false;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -43,9 +47,13 @@ capacitaciones.addEventListener('click', agregarProducto);
 
 
 //Jquery
+$('#cerrar-sesion').hide();
 $('#vaciar-carrito').click(vaciarCarrito);
 $('#listaProductos').click(agregarProducto);
-$('#ingresar').click(registro);
+$('#ingresar').click(ingresar);
+$('#registrar').click(registro);
+$('#cerrar-sesion').click(sesionCerrada);
+$('#comprar-carrito').click(comprarCarrito);
 
 
 
@@ -196,7 +204,12 @@ function renderCapacitaciones(caps) {
                 <h5 class="card-title tituloCard">${capacitacion.nombre}</h5>
                 <p class="card-text textoCard">${capacitacion.precio}</p>
                 <div class="row">
-                <a href="#" class="btn btn-outline-primary agregarCarrito col" data-id="${capacitacion.id}">Agregar al carrito</a>
+                <select class="form-select selectFont col" aria-label="Default select example">
+                <option value="1">Curso Normal</option>
+                <option value="1">Curso Acelerado</option>
+                </select>
+                
+                <a href="#" class="btn btn-outline-primary agregarCarrito btn-lg col" data-id="${capacitacion.id}">Agregar al carrito</a>
                 </div>
                 </div>
         </div>
@@ -237,23 +250,63 @@ function renderProducts(productos) {
 
 
 
-let usuarios = [];
 
-let usuariosLS = JSON.parse(localStorage.getItem('usuarios'));
-
-if (usuariosLS !== null) {
-    usuarios = JSON.parse(localStorage.getItem('usuarios'));
-}
-const saludoInicial = `Bienvenido! Ingresa una opción
-1 - Registrarse
-2 - Ingresar con mi usuario
-`
 
 function registro() {
-    alert("FUnciona");
 
-    /* const user = document.querySelector('#user');
-    const pass = document.querySelector('#pass');
+    const user = document.querySelector('#user').value;
+    const pass = document.querySelector('#pass').value;
+    const usuario = {
+        user: user,
+        pass: pass
+    }
+    const usuariosLS = JSON.parse(localStorage.getItem('usuarios'));
+
+    const resultado = usuariosLS.find((usuario) => usuario.user === user);
+    if (resultado) {
+        swal("El nombre de usuario ya existe");;
+    } else {
+
+        usuarios.push(usuario);
+
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        swal("Usuario agregado exitosamente!");
+        sesionIniciada();
+    }
+}
+
+function sesionIniciada() {
+    const bingresar = document.querySelector("#ingresar");
+    bingresar.style.display = "none";
+    const bregistrar = document.querySelector("#registrar");
+    bregistrar.style.display = "none";
+    const bcerrar = document.querySelector("#cerrar-sesion");
+    bcerrar.style.display = "block";
+    const tuser = document.querySelector("#user");
+    tuser.style.display = "none";
+    const tpass = document.querySelector("#pass");
+    tpass.style.display = "none";
+    sesion = true;
+}
+
+function sesionCerrada() {
+    const bingresar = document.querySelector("#ingresar");
+    bingresar.style.display = "inline-block";
+    const bregistrar = document.querySelector("#registrar");
+    bregistrar.style.display = "inline-block";
+    const bcerrar = document.querySelector("#cerrar-sesion");
+    bcerrar.style.display = "none";
+    const tuser = document.querySelector("#user");
+    tuser.style.display = "block";
+    const tpass = document.querySelector("#pass");
+    tpass.style.display = "block";
+    sesion = false;
+}
+
+function ingresar() {
+
+    const user = document.querySelector('#user').value;
+    const pass = document.querySelector('#pass').value;
 
     const usuario = {
         user: user,
@@ -263,47 +316,50 @@ function registro() {
     const usuariosLS = JSON.parse(localStorage.getItem('usuarios'));
 
     const resultado = usuariosLS.find((usuario) => usuario.user === user && usuario.pass === pass);
-*/
-    /*  let opcionInicial = Number(prompt(saludoInicial));
 
-      while (opcionInicial != 1 && opcionInicial != 2) {
-          alert("La opción ingresada es incorrecta");
-          opcionInicial = Number(prompt(saludoInicial));
-      }
+    if (resultado) {
+        swal("Bienvenido " + usuario.user + "!");
 
-      if (opcionInicial == 1) {
+        sesionIniciada();
 
-          Registro
-          const user = prompt("Ingresa tu nuevo nombre de usuario");
-          const pass = prompt("Ingresa tu nuevo password");
+        /* $('#ingresar').toggle(500, swing);
+         $('#registrar').toggle(500, swing);
+         $('#cerrar-sesion').toggle(500, swing);*/
+    } else {
+        swal("Alguno de los datos son incorrectos");
+    }
 
-          const usuario = {
-                  user: user,
-                  pass: pass
-              }
-              usuarios = JSON.parse(localStorage.getItem('usuarios'));
+}
 
-          usuarios.push(usuario);
+function comprarCarrito() {
 
-          localStorage.setItem('usuarios', JSON.stringify(usuarios));
-      }
+    const totalCompra = sumar(carrito);
+    if (totalCompra != 0) {
+        swal({
+                title: "Su compra por $" + totalCompra + " ha sido iniciada",
+                text: "Una vez realizada la compra, le llegara un email con su factura y numero de seguimiento.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (sesion) {
+                    if (willDelete) {
+                        swal("Compra realizada con exito!", {
+                            icon: "success",
 
-      if (opcionInicial == 2) {
-          const user = prompt("Ingresa tu nombre de usuario");
-          const pass = prompt("Ingresa tu password");
-
-          const usuariosLS = JSON.parse(localStorage.getItem('usuarios'));
-
-          const resultado = usuariosLS.find((usuario) => usuario.user === user && usuario.pass === pass);
-          console.log(resultado);
-
-          if (resultado) {
-              alert("LOGIN EXITOSO");
-              var elem = document.getElementById("registro");
-              elem.innerHTML = "Usuario: " + user;
-
-          } else {
-              alert("Los datos son incorrectos");
-          }
-      } */
+                        });
+                        carrito = []
+                        actualizarCarritoHTML();
+                        actualizarStorage();
+                    } else {
+                        swal("Puede seguir agregando productos al carrito!");
+                    }
+                } else {
+                    swal("Antes de finalizar la compra inicie sesion o registrese");
+                }
+            });
+    } else {
+        swal("No tienes productos agregados al carrito.")
+    }
 }
